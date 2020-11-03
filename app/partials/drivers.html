@@ -1,0 +1,52 @@
+<!-- <input type="text" ng-model="nameFilter" placeholder="Search..."/>
+<table>
+<thead>
+  <tr><th colspan="4">Drivers Championship Standings</th></tr>
+</thead>
+<tbody>
+  <tr ng-repeat="driver in driversList | filter: searchFilter">
+    <td>{{$index + 1}}</td>
+    <td>
+      <img src="img/flags/{{driver.Driver.nationality}}.png" />
+      <a href="#/drivers/{{driver.Driver.driverId}}">
+	  	{{driver.Driver.givenName}}&nbsp;{{driver.Driver.familyName}}
+	  </a>
+	</td>
+    <td>{{driver.Constructors[0].name}}</td>
+    <td>{{driver.points}}</td>
+  </tr>
+</tbody>
+</table> -->
+
+<style>
+  img {
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 5px;
+    width: 100px;
+  }
+  </style>
+
+<div class="container">
+  <ul class="nav nav-tabs">
+    <li ng-class="{'active': selectedTab == 'Recipe Book'}"><a href="#" ng-click="selectTab('Recipe Book')">Recipe Book</a></li>
+    <li ng-class="(selectedTab=='Recipes') ? 'enabled' : 'disabled'"><a href="#" ng-click="selectTab('Recipes')">Recipes</a></li>
+    <li ng-class="{'active': selectedTab == 'Shopping List'}"><a href="#" ng-click="selectTab('Shopping List')">Shopping List</a></li>
+  </ul>
+  <br>
+  <div ng-repeat="recipe in recipeList">
+    <div class="panel panel-default" ng-click="showRecipeDetails(recipe.id)" style="width:50%">
+      <div class="panel-heading">{{recipe.name}}</div>
+      <div class="panel-body">{{recipe.description}}</div>
+      <div class="panel-body"><img src="{{recipe.imageUrl}}" /></div>
+    </div>
+  </div >
+    Name
+    <p><input type="text" ng-model="selectedRecipe.name"></p>
+    Description
+    <p><input type="text" ng-model="selectedRecipe.description"></p>
+    Image
+    <p><input type="text" ng-model="selectedRecipe.imageUrl"></p>
+  </div>
+  </div>
+</div>
