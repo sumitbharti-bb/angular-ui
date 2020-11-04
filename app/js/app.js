@@ -1,11 +1,11 @@
-angular.module('F1FeederApp', [
-  'F1FeederApp.services',
-  'F1FeederApp.controllers',
+angular.module('RecipeManagement', [
+  'RecipeManagement.services',
+  'RecipeManagement.controllers',
   'ngRoute'
 ]).
 config(['$routeProvider', function($routeProvider) {
   $routeProvider.
-	when("/drivers", {templateUrl: "partials/drivers.html", controller: "driversController"}).
-	when("/drivers/:id", {templateUrl: "partials/driver.html", controller: "driverController"}).
-	otherwise({redirectTo: '/drivers'});
+	when("/recipe", {templateUrl: "partials/recipe.html", controller: "recipeController"}).
+	when("/shopping", {templateUrl: "partials/shopping.html", controller: "shoppingController"}).
+	otherwise({redirectTo: '/recipe'});
 }]);

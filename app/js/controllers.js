@@ -1,7 +1,7 @@
-angular.module('F1FeederApp.controllers', []).
+angular.module('RecipeManagement.controllers', []).
 
   /* Drivers controller */
-  controller('driversController', function($scope, ergastAPIservice) {
+  controller('recipeController', function($scope, recipeManagmentAPIservice) {
     $scope.nameFilter = null;
     $scope.driversList = [];
     $scope.searchFilter = function (driver) {
@@ -9,7 +9,7 @@ angular.module('F1FeederApp.controllers', []).
         return !$scope.nameFilter || re.test(driver.Driver.givenName) || re.test(driver.Driver.familyName);
     };
 
-    ergastAPIservice.getDrivers().success(function (response) {
+    recipeManagmentAPIservice.getDrivers().success(function (response) {
         //Digging into the response to get the relevant data
         $scope.driversList = response.MRData.StandingsTable.StandingsLists[0].DriverStandings;
     });
@@ -38,16 +38,16 @@ angular.module('F1FeederApp.controllers', []).
   }).
 
   /* Driver controller */
-  controller('driverController', function($scope, $routeParams, ergastAPIservice) {
+  controller('shoppingController', function($scope, $routeParams, recipeManagmentAPIservice) {
     $scope.id = $routeParams.id;
     $scope.races = [];
     $scope.driver = null;
 
-    ergastAPIservice.getDriverDetails($scope.id).success(function (response) {
+    recipeManagmentAPIservice.getDriverDetails($scope.id).success(function (response) {
         $scope.driver = response.MRData.StandingsTable.StandingsLists[0].DriverStandings[0]; 
     });
 
-    ergastAPIservice.getDriverRaces($scope.id).success(function (response) {
+    recipeManagmentAPIservice.getDriverRaces($scope.id).success(function (response) {
         $scope.races = response.MRData.RaceTable.Races; 
     }); 
   });

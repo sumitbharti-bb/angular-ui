@@ -1,5 +1,5 @@
-angular.module('F1FeederApp.services', [])
-  .factory('ergastAPIservice', function($http) {
+angular.module('RecipeManagement.services', [])
+  .factory('recipeManagmentAPIservice', function($http) {
 
     var ergastAPI = {};
 
