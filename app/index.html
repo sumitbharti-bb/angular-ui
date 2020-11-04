@@ -3,8 +3,23 @@
 <head>
   <title>F-1 Feeder</title>
 </head>
+<style>
+  img {
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 5px;
+    width: 100px;
+  }
+  .highlight { background: gainsboro;}
+  </style>
 
 <body ng-app="RecipeManagement">
+  <div class="container">
+    <ul class="nav nav-tabs">
+      <li ng-class="($root.selectedTab=='Recipes') ? 'highlight' : 'none'"><a ng-href="#/recipe" ng-click="selectTab('Recipes')">Recipes</a></li>
+      <li ng-class="($root.selectedTab=='Shopping List') ? 'highlight' : 'none'"><a ng-href="#/shopping" ng-click="selectTab('Shopping List')">Shopping List</a></li>
+    </ul>
+  </div>
   <ng-view></ng-view>
   <script src="bower_components/angular/angular.js"></script>
   <script src="bower_components/angular-route/angular-route.js"></script>

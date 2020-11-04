@@ -1,28 +1,33 @@
 angular.module('RecipeManagement.services', [])
   .factory('recipeManagmentAPIservice', function($http) {
 
-    var ergastAPI = {};
+    var backendAPI = {};
 
-    ergastAPI.getDrivers = function() {
-      return $http({
-        method: 'JSONP', 
-        url: 'http://ergast.com/api/f1/2013/driverStandings.json?callback=JSON_CALLBACK'
-      });
+    backendAPI.getAllRecipe = function() {
+      return $http.get('http://localhost:8080/recipe/list');
     }
 
-    ergastAPI.getDriverDetails = function(id) {
+    backendAPI.getRecipeById = function(id) {
+      return $http.get('http://localhost:8080/recipe/'+id);
+    }
+
+    backendAPI.createRecipe = function(recipe) {
+      return $http.post('http://localhost:8080/recipe', recipe);
+    }
+
+    backendAPI.getDriverDetails = function(id) {
       return $http({
         method: 'JSONP', 
         url: 'http://ergast.com/api/f1/2013/drivers/'+ id +'/driverStandings.json?callback=JSON_CALLBACK'
       });
     }
 
-    ergastAPI.getDriverRaces = function(id) {
+    backendAPI.getDriverRaces = function(id) {
       return $http({
         method: 'JSONP', 
         url: 'http://ergast.com/api/f1/2013/drivers/'+ id +'/results.json?callback=JSON_CALLBACK'
       });
     }
 
-    return ergastAPI;
+    return backendAPI;
   });

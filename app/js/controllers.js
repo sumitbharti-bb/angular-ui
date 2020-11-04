@@ -1,7 +1,7 @@
 angular.module('RecipeManagement.controllers', []).
 
   /* Drivers controller */
-  controller('recipeController', function($scope, recipeManagmentAPIservice) {
+  controller('recipeController', function($scope, recipeManagmentAPIservice, $rootScope) {
     $scope.nameFilter = null;
     $scope.driversList = [];
     $scope.searchFilter = function (driver) {
@@ -9,18 +9,42 @@ angular.module('RecipeManagement.controllers', []).
         return !$scope.nameFilter || re.test(driver.Driver.givenName) || re.test(driver.Driver.familyName);
     };
 
-    recipeManagmentAPIservice.getDrivers().success(function (response) {
+    $scope.getAllRecipe = function(){
+      recipeManagmentAPIservice.getAllRecipe().success(function (response) {
         //Digging into the response to get the relevant data
-        $scope.driversList = response.MRData.StandingsTable.StandingsLists[0].DriverStandings;
+        console.log('Response from backend');
+        console.log(response);
+        $scope.recipeList = response;
+        //$scope.driversList = response.MRData.StandingsTable.StandingsLists[0].DriverStandings;
     });
+  }
+  $scope.getAllRecipe();
 
-    $scope.selectedTab = 'Recipe Book';
+    $scope.selectedTab = 'Recipes';
     $scope.selectedRecipe = {};
 
-    $scope.recipeList = [
-      {'id': 1, 'name': 'Tasty Schnitzel', 'description': 'A super-tasty Schnitzl - just awesome', 'imageUrl': 'https://image.shutterstock.com/image-photo/healthy-food-clean-eating-selection-600w-722718082.jpg'},
-      {'id': 2, 'name': 'Big Fat Burger', 'description': 'What else you need to say?', 'imageUrl': ''}
-    ]
+    // $scope.recipeList = [
+    //   {'id': 1, 'name': 'Tasty Schnitzel', 'description': 'A super-tasty Schnitzl - just awesome', 'imageUrl': 'https://image.shutterstock.com/image-photo/healthy-food-clean-eating-selection-600w-722718082.jpg'},
+    //   {'id': 2, 'name': 'Big Fat Burger', 'description': 'What else you need to say?', 'imageUrl': ''}
+    // ]
+
+    $scope.newRecipe = {};
+    $scope.showCreateRecipe = function(){
+      $scope.show_create_recipe = true;
+    }
+
+    $scope.saveRecipe = function(){
+      recipeManagmentAPIservice.createRecipe($scope.newRecipe).success(function (response) {
+        console.log('Response after saving from backend');
+        console.log(response);
+        $scope.show_create_recipe = false;
+        $scope.getAllRecipe();
+    });
+    }
+
+    $scope.cancelRecipe = function(){
+      $scope.newRecipe = {};
+    }
 
     $scope.selectTab = function(value){
       $scope.selectedTab = value;
@@ -38,7 +62,7 @@ angular.module('RecipeManagement.controllers', []).
   }).
 
   /* Driver controller */
-  controller('shoppingController', function($scope, $routeParams, recipeManagmentAPIservice) {
+  controller('shoppingController', function($scope, $routeParams, recipeManagmentAPIservice, $rootScope) {
     $scope.id = $routeParams.id;
     $scope.races = [];
     $scope.driver = null;
